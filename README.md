@@ -122,7 +122,6 @@ Make sure you have `sudo` privileges on your system.
     ```bash
     python manage.py startapp students
     ```
-
 2. **Edit Installed Apps**
     ```bash
     nano crm_project/settings.py
@@ -132,6 +131,7 @@ Make sure you have `sudo` privileges on your system.
     ALLOWED_HOSTS = ['192.168.0.109', 'localhost', '127.0.0.1']
     ```
     Add `'students',` to the `INSTALLED_APPS` list.
+![Alt text](https://github.com/Tarun-Tiwari10052001/CRM_Django_project/blob/master/Imges/4.2-after.png)
 
 ## 5. Define Models
 
@@ -153,6 +153,7 @@ Make sure you have `sudo` privileges on your system.
         def __str__(self):
             return f"{self.first_name} {self.last_name}"
     ```
+![Alt text](https://github.com/Tarun-Tiwari10052001/CRM_Django_project/blob/master/Imges/5.1%20after.png)
 
 2. **Apply Migrations**
     ```bash
@@ -266,7 +267,9 @@ Make sure you have `sudo` privileges on your system.
 2. **Access it in your browser**
     ```bash
     localhost:8000/student  or localhost:8000/admin
-      ```    
+      ```
+![Alt text](https://github.com/Tarun-Tiwari10052001/CRM_Django_project/blob/master/Imges/crm_final_1.png) 
+![Alt text](https://github.com/Tarun-Tiwari10052001/CRM_Django_project/blob/master/Imges/crm_final2.png)
 ## Conclusion
 
 You have successfully set up a Django CRM project. You can now start building your application!
