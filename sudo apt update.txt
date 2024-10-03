@@ -1,0 +1,112 @@
+sudo apt update
+python3 --version
+sudo apt install python3-pip
+python3 -m venv myenv ## create new virtual env
+sudo apt install python3.12-venv  >>
+python3 -m venv myenv
+source myenv/bin/activate
+pip install virtualenv
+sudo apt install pipx
+pip install django
+sudo apt install pipx
+django-admin startproject crm_project
+cd crm_project
+python manage.py runserver  ###starts Django's built-in development server.  ||  
+python manage.py migratete
+
+python manage.py runserver 0.0.0.0:8000 ## after run welcomepagecomes
+nano ./crm_project/settings.py   ##edit   ALLOWED_HOSTS = ['192.168.0.109', 'localhost', '127.0.0.1']
+python manage.py startapp students  ##Create a New App
+4.2 Register the App
+    nano crm_project/settings.py  ### add 'students', to the INSTALLED_APPS list.
+
+##    5. Define Models
+##    5.1 Create Models
+##    In students/models.py
+
+nano students/models.py  ##and add in file
+
+        class Student(models.Model):
+            first_name = models.CharField(max_length=100)
+            last_name = models.CharField(max_length=100)
+            email = models.EmailField()
+            phone_number = models.CharField(max_length=15, blank=True)
+            enrollment_date = models.DateField()
+
+            def __str__(self):
+                return f"{self.first_name} {self.last_name}"
+
+
+ ##   5.2 Apply Migrations
+ ##   SH
+        python manage.py makemigrations
+        python manage.py migrate
+
+#Define Views
+#In students/views.py
+
+    from django.shortcuts import render
+    from .models import Student
+
+    def student_list(request):
+        students = Student.objects.all()
+        return render(request, 'students/student_list.html', {'students': students})
+
+# 6.2 Create Templates
+# Create a directory students/templates/students/ and add a template file student_list.html:
+cd students/
+# mkdir -p templates/student
+nano templates/students/student_list.html
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Student List</title>
+    </head>
+    <body>
+        <h1>Student List</h1>
+        <ul>
+            {% for student in students %}
+                <li>{{ student.first_name }} {{ student.last_name }} - {{ student.email }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+    </html>
+
+7. Set Up URLs
+    7.1 Define URLs for the App
+        In students/urls.py 
+
+            from django.urls import path
+            from . import views
+            urlpatterns = [
+                path('', views.student_list, name='student_list'),
+            ]
+
+
+
+
+ #7.2 Include App URLs in Project URLs
+ nano urls.py
+ #       In crm_project/urls.py, include the app URLs:
+
+            from django.contrib import admin
+            from django.urls import path, include
+            urlpatterns = [
+                path('admin/', admin.site.urls),
+                path('students/', include('students.urls')),
+            ]
+
+8. Add Admin Interface
+    8.1 Register Models
+        In students/admin.py
+
+            from django.contrib import admin
+            from .models import Student
+
+            admin.site.register(Student)
+
+    8.2 Create Superuser
+        Create a superuser to access the admin interface:  
+
+        python manage.py createsuperuser
+
